@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de gestión | ImproveFit</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E1013">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap">
+<style>
+  /* Estilos propios del panel. No se cargan en la web pública. */
+  body { background: var(--fondo); }
+  .panel-cab {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14,16,19,.94); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--linea);
+  }
+  .panel-cab__barra { display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap; padding-block: var(--s-4); }
+  .panel-cab__barra h1 { font-size: var(--t-md); }
+  .panel-cab__acciones { margin-left: auto; display: flex; gap: var(--s-2); flex-wrap: wrap; }
+  .pestanas { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--linea); }
+  .pestana {
+    padding: .7rem 1.1rem; margin-left: -1px;
+    border: 1px solid var(--linea); border-top: 0;
+    font-family: var(--mono); font-size: .6875rem; font-weight: 400;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--texto-3);
+  }
+  .pestana:first-child { margin-left: 0; }
+  .pestana[aria-selected='true'] { background: var(--naranja); border-color: var(--naranja); color: var(--tinta); }
+  .hoja { display: none; padding-block: var(--s-7); }
+  .hoja[data-activa='true'] { display: block; }
+  .bloque {
+    border: 1px solid var(--linea); background: var(--carta);
+    padding: var(--s-5); margin-bottom: var(--s-4);
+  }
+  .bloque > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;
+    font-weight: 700; 
+  }
+  .bloque > summary::-webkit-details-marker { display: none; }
+  .bloque > summary::before { content: '▸'; color: var(--naranja); }
+  .bloque[open] > summary::before { content: '▾'; }
+  .bloque__meta { margin-left: auto; font-family: var(--mono); font-size: .6875rem; letter-spacing: .12em; color: var(--texto-3); }
+  .bloque__cuerpo { display: grid; gap: var(--s-4); margin-top: var(--s-5); padding-top: var(--s-5); border-top: 1px solid var(--linea); }
+  .par { display: grid; gap: var(--s-4); }
+  @media (min-width: 760px) { .par { grid-template-columns: 1fr 1fr; } }
+  .panel .campo input, .panel .campo textarea { background: var(--campo); border: 1px solid var(--linea-2); padding: .7rem .8rem; }
+  .panel .campo input:focus, .panel .campo textarea:focus { border-color: var(--naranja); }
+  .ayuda { font-size: var(--t-xs); color: var(--texto-3); max-width: 70ch; }
+  .peligro { border-left: 2px solid #F07A72; padding-left: var(--s-4); }
+  .salida { font-family: var(--mono); font-size: .6875rem; white-space: pre-wrap; word-break: break-all; background: var(--campo); border: 1px solid var(--linea); padding: var(--s-4); max-height: 18rem; overflow: auto; }
+  .apagado { opacity: .45; }
+</style>
+<script src="lib/manifest.js"></script>
+</head>
+
+<body class="panel">
+
+<header class="panel-cab">
+  <div class="wrap">
+    <div class="panel-cab__barra">
+      <img src="assets/icons/icon-64.png" width="32" height="32" alt="" style="border-radius:50%">
+      <h1>Panel de ImproveFit</h1>
+      <p class="folio" data-sin-guardar hidden>· Cambios sin descargar</p>
+      <div class="panel-cab__acciones">
+        <button class="btn btn--pequeno" type="button" data-vista-previa>Ver la web</button>
+        <button class="btn btn--pequeno" type="button" data-descargar>Descargar manifest.js</button>
+        <button class="btn btn--naranja btn--pequeno" type="button" data-github>Subir a GitHub</button>
+      </div>
+    </div>
+    <nav class="pestanas" role="tablist" aria-label="Secciones del panel">
+      <button class="pestana" role="tab" aria-selected="true" data-ir="negocio">Negocio</button>
+      <button class="pestana" role="tab" aria-selected="false" data-ir="catalogo">Catálogo</button>
+      <button class="pestana" role="tab" aria-selected="false" data-ir="zonas">Zonas</button>
+      <button class="pestana" role="tab" aria-selected="false" data-ir="textos">Textos</button>
+      <button class="pestana" role="tab" aria-selected="false" data-ir="faq">Preguntas</button>
+      <button class="pestana" role="tab" aria-selected="false" data-ir="resenas">Reseñas</button>
+      <button class="pestana" role="tab" aria-selected="false" data-ir="ajustes">Ajustes</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hoja" data-hoja="negocio" role="tabpanel" data-activa="true"></section>
+  <section class="hoja" data-hoja="catalogo" role="tabpanel"></section>
+  <section class="hoja" data-hoja="zonas" role="tabpanel"></section>
+  <section class="hoja" data-hoja="textos" role="tabpanel"></section>
+  <section class="hoja" data-hoja="faq" role="tabpanel"></section>
+  <section class="hoja" data-hoja="resenas" role="tabpanel"></section>
+  <section class="hoja" data-hoja="ajustes" role="tabpanel"></section>
+
+  <p class="ayuda" style="padding-block:var(--s-8);border-top:1px solid var(--linea)">
+    Este panel funciona entero dentro de tu navegador: no hay servidor y nada sale de tu ordenador
+    salvo que pulses «Subir a GitHub». Los cambios se guardan en el navegador según los escribes,
+    pero <strong>la web pública no cambia hasta que descargas el archivo y lo subes</strong>
+    (o lo subes directamente a GitHub).
+  </p>
+</main>
+
+<script src="lib/panel.js"></script>
+</body>
+</html>

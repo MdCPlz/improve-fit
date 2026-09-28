@@ -1,0 +1,16 @@
+{
+  "name": "ImproveFit · Gimnasio en Aranda de Duero",
+  "short_name": "ImproveFit",
+  "description": "Clases dirigidas en grupos de seis, entrenamiento funcional híbrido y entrenador personal en Aranda de Duero.",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0E1013",
+  "theme_color": "#0E1013",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

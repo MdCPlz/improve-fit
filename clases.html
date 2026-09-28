@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Clases dirigidas y entrenador personal en Aranda de Duero | ImproveFit</title>
+<meta name="description" content="Todas las clases de ImproveFit en Aranda de Duero: grupos reducidos de seis, funcional híbrido, fuerza, metcon, HIIT, cardio, core, movilidad, Deka FIT, puro glúteo y entrenamiento personal con readaptación de lesiones.">
+<link rel="canonical" href="https://improvefit.es/clases.html">
+
+<meta name="theme-color" content="#0E1013">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="geo.region" content="ES-BU">
+<meta name="geo.placename" content="Aranda de Duero">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImproveFit">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Clases y entrenamiento personal | ImproveFit Aranda de Duero">
+<meta property="og:description" content="Quince formas de entrenar: grupos de seis, funcional híbrido y entrenador personal.">
+<meta property="og:url" content="https://improvefit.es/clases.html">
+<meta property="og:image" content="https://improvefit.es/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap"></noscript>
+
+<script src="lib/manifest.js" defer></script>
+<script src="lib/nucleo.js" defer></script>
+<script src="lib/dinamicas.js" defer></script>
+<script src="lib/catalogo.js" defer></script>
+<script src="lib/plan.js" defer></script>
+<script src="lib/efectos.js" defer></script>
+</head>
+
+<body id="top">
+<a class="saltar" href="#main">Saltar al contenido</a>
+<header class="cabecera" id="cabecera"></header>
+
+<main id="main">
+
+  <section class="obertura">
+    <div class="wrap obertura__grid">
+      <div>
+        <nav class="miga" aria-label="Migas de pan">
+          <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li aria-current="page">Clases y servicios</li>
+          </ol>
+        </nav>
+        <h1>Nuestras clases</h1>
+        <p class="entradilla">Tenemos tres salas y cada una tiene sus clases. Aquí ves cuánto dura cada una y para quién es. Si no sabes cuál elegir, llámanos y te lo decimos.</p>
+        <div class="fila mt-4">
+          <a class="btn btn--naranja" data-enlace="reserva" href="https://improvefithybridcenter.wodbuster.com/invitado.aspx" target="_blank" rel="noopener">Probar una clase gratis</a>
+          <a class="btn btn--tel" data-enlace="tel" data-tel-texto="Llamar al " href="tel:+34638580886">Llamar al 638 58 08 86</a>
+        </div>
+      </div>
+      <figure class="obertura__fondo">
+        <div class="foto foto--zoom">
+          <picture>
+            <source type="image/webp" srcset="assets/img/zona-hybrid-480.webp 480w, assets/img/zona-hybrid-800.webp 800w, assets/img/zona-hybrid-1200.webp 1200w" sizes="(min-width: 960px) 42vw, 92vw">
+            <img src="assets/img/zona-hybrid-1200.jpg" width="1200" height="900" alt="Un entrenador corrige a una alumna que levanta una pesa rusa." loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="seccion seccion--corta" aria-label="Las clases, sala por sala">
+    <div class="wrap" data-catalogo></div>
+  </section>
+
+  <!-- ===== TEST DE TRES PREGUNTAS ====================================== -->
+  <section class="seccion seccion--nieve" id="test" aria-labelledby="h-test">
+    <div class="wrap">
+      <header class="titulo-seccion">
+        <h2 id="h-test" data-campo="copy.selector.titulo">Contesta tres cosas y te decimos por dónde entrar.</h2>
+        <p class="entradilla" data-campo="copy.selector.entradilla">Treinta segundos y te damos zona, clase concreta y el mensaje ya escrito.</p>
+      </header>
+      <div class="test" data-test></div>
+    </div>
+  </section>
+
+  <section class="seccion" id="preguntas" aria-labelledby="h-faq">
+    <div class="wrap">
+      <header class="titulo-seccion">
+        <h2 id="h-faq" data-campo="copy.faq.titulo">Preguntas que nos hacen.</h2>
+      </header>
+      <div class="faq" data-faq></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie" id="pie"></footer>
+
+<script>
+/* Reutiliza el selector de casos de la portada en esta página */
+document.addEventListener('DOMContentLoaded', function () {
+  var B = window.__BRAND__, IF = window.IF;
+  var host = document.querySelector('[data-casos-clases]');
+  if (!host || !B || !IF) return;
+  host.innerHTML = (B.copy.selector.casos || []).map(function (c) {
+    var z = (B.catalogo.categorias || []).filter(function (x) { return x.id === c.zona; })[0] || {};
+    return '<button class="caso" type="button" data-filtro-zona="' + c.zona + '">' +
+      '<span class="caso__texto">' + IF.esc(c.texto) + '</span>' +
+      '<span class="caso__destino">' + IF.esc(z.nombre || '') + ' ' + IF.ICO.flecha + '</span>' +
+    '</button>';
+  }).join('');
+  host.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-filtro-zona]');
+    if (!b) return;
+    location.hash = b.getAttribute('data-filtro-zona');
+    document.querySelector('[data-catalogo]').scrollIntoView({ block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

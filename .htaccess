@@ -1,0 +1,103 @@
+# =============================================================================
+# ImproveFit · configuración de servidor Apache
+# Sube este archivo junto al resto. Si tu alojamiento no es Apache (por
+# ejemplo Nginx o Netlify), ignóralo: la web funciona igual, solo que sin
+# compresión ni caché afinadas.
+# =============================================================================
+
+# ---------- Página de error propia -------------------------------------------
+ErrorDocument 404 /404.html
+
+# ---------- Redirecciones ----------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Forzar https
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # Un solo dominio: sin www
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+  # La web anterior era una sola página con anclas. Todas las URL antiguas
+  # siguen existiendo tal cual, así que no hace falta redirigir nada.
+  # Si algún día mueves una página, añade aquí su redirección permanente:
+  # Redirect 301 /ruta-antigua.html /ruta-nueva.html
+</IfModule>
+
+# ---------- Compresión -------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE text/javascript application/javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE application/manifest+json image/svg+xml
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+</IfModule>
+
+# ---------- Caché ------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # El HTML se revisa siempre: así los cambios se ven al momento
+  ExpiresByType text/html "access plus 0 seconds"
+
+  # Los datos del negocio, un día
+  <FilesMatch "manifest\.js$">
+    ExpiresDefault "access plus 1 day"
+  </FilesMatch>
+
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
+  ExpiresByType video/webm "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpg|jpeg|png|svg|ico|mp4|webm|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # ---------- Seguridad ------------------------------------------------------
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # Quita la cabecera que delata la versión del servidor
+  Header unset X-Powered-By
+</IfModule>
+
+# ---------- Tipos MIME que algunos alojamientos no traen ---------------------
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType video/webm .webm
+  AddType application/manifest+json .webmanifest
+  AddType font/woff2 .woff2
+</IfModule>
+
+# ---------- No listar carpetas ----------------------------------------------
+Options -Indexes
+
+# ---------- Bloquear archivos que no deben servirse --------------------------
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>

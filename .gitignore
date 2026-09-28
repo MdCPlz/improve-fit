@@ -1,0 +1,14 @@
+# Herramientas locales de vista previa, no son parte de la web
+.claude/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependencias, si algún día se añaden
+node_modules/
+
+# Claves: solo en variables de entorno, nunca en el repositorio
+.env
+.env.*

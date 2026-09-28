@@ -1,0 +1,6 @@
+# ImproveFit · Gimnasio en Aranda de Duero
+User-agent: *
+Allow: /
+Disallow: /panel.html
+
+Sitemap: https://improvefit.es/sitemap.xml

@@ -1,0 +1,286 @@
+/* =============================================================================
+   IMPROVEFIT · guia.css
+   «Cómo apuntarte», el asistente paso a paso. Solo se carga en apuntarme.html.
+
+   Ordenador: la lista de pasos a la izquierda, fija, y el paso a la derecha.
+   Móvil: arriba «Paso 3 de 9» con su barra; el paso; y abajo, pegados,
+   «Atrás» y «Siguiente».
+   ========================================================================== */
+
+/* En la guía no hace falta nada más: sin pie, sin barra de ayuda del móvil y
+   sin burbuja de WhatsApp. La ayuda va dentro del propio asistente. */
+.guia-asistente .pie, .guia-asistente .ayuda-fija, .guia-asistente .wa { display: none !important; }
+.guia-asistente body { padding-bottom: 0; }
+
+.asistente {
+  width: 100%; max-width: 1320px; margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2.5rem) var(--gutter) 0;
+  display: grid; gap: var(--s-5);
+  min-height: calc(100svh - var(--cabecera));
+}
+@media (min-width: 1000px) {
+  .asistente { grid-template-columns: 19rem minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+}
+
+/* ---------- La columna de los pasos -------------------------------------- */
+.asistente__lado { display: grid; gap: var(--s-4); align-content: start; }
+@media (min-width: 1000px) {
+  .asistente__lado { position: sticky; top: 5.5rem; padding-top: var(--s-2); }
+}
+.asistente__eti { font-family: var(--display); font-weight: 800; font-size: var(--t-lg); line-height: 1.1; letter-spacing: -.02em; }
+@media (max-width: 999px) { .asistente__eti { display: none; } }
+
+.asistente__lista > summary {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem;
+  min-height: 3.5rem; padding: .75rem 1.1rem; cursor: pointer; list-style: none;
+  border-radius: var(--r-lg); background: var(--carta); border: 1px solid var(--linea-2);
+  font-size: var(--t-sm); font-weight: 700;
+}
+.asistente__lista > summary::-webkit-details-marker { display: none; }
+.asistente__lista > summary b { color: var(--naranja); text-decoration: underline; text-underline-offset: 4px; font-size: var(--t-xs); }
+.asistente__lista[open] > summary b { font-size: 0; }
+.asistente__lista[open] > summary b::after { content: 'Cerrar la lista'; font-size: var(--t-xs); }
+@media (min-width: 1000px) { .asistente__lista > summary { display: none; } }
+
+.indice { display: grid; gap: .35rem; margin-top: var(--s-3); }
+@media (min-width: 1000px) { .indice { margin-top: 0; } }
+.indice__paso {
+  width: 100%; display: flex; align-items: center; gap: .9rem; text-align: left;
+  min-height: 3.4rem; padding: .45rem .9rem .45rem .5rem; border-radius: var(--r-lg);
+  font-size: var(--t-sm); font-weight: 700; color: var(--texto-2);
+  border: 1px solid transparent;
+  transition: background var(--dur-rapido) var(--ease), color var(--dur-rapido) var(--ease), border-color var(--dur-rapido) var(--ease);
+}
+.indice__paso:hover { background: var(--carta); color: var(--texto); }
+.indice__n {
+  width: 2.5rem; height: 2.5rem; flex: none; border-radius: 50%;
+  display: grid; place-items: center; position: relative;
+  background: var(--campo); border: 2px solid var(--linea-2); color: var(--texto);
+  font-family: var(--display); font-weight: 800; font-size: 1.05rem;
+  transition: background .35s var(--ease), border-color .35s var(--ease), transform .45s var(--ease-muelle);
+}
+.indice__n svg { position: absolute; width: 1.2rem; height: 1.2rem; opacity: 0; transform: scale(.4); transition: opacity .3s var(--ease), transform .45s var(--ease-muelle); }
+/* Los que ya has visto: la marca de hecho en lugar del número */
+.indice__paso.es-visto .indice__n { border-color: var(--naranja); color: var(--naranja); }
+.indice__paso.es-visto .indice__n b { opacity: 0; }
+.indice__paso.es-visto .indice__n svg { opacity: 1; transform: none; }
+/* El de ahora: naranja entero y la fila marcada */
+.indice__paso.es-actual { background: var(--carta); border-color: var(--linea-2); color: var(--texto); }
+.indice__paso.es-actual .indice__n { background: var(--naranja); border-color: var(--naranja); color: var(--tinta); transform: scale(1.08); box-shadow: 0 0 0 6px rgba(242,132,30,.15); }
+
+.asistente__barra { height: 8px; border-radius: var(--pill); background: var(--campo); overflow: hidden; }
+.asistente__barra i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--grad); transition: width .6s var(--ease-out); }
+
+.asistente__ayuda {
+  display: grid; gap: var(--s-3); padding: var(--s-5); border-radius: var(--r-lg);
+  background: var(--capa); border: 1px solid var(--linea);
+}
+.asistente__ayuda p { font-size: var(--t-sm); color: var(--texto-2); }
+.asistente__ayuda b { color: var(--texto); display: block; }
+.asistente__ayuda .btn { width: 100%; }
+@media (max-width: 999px) {
+  .asistente__lado { order: 0; }
+  .asistente__ayuda { order: 3; grid-template-columns: 1fr auto; align-items: center; padding: var(--s-3) var(--s-4); }
+  .asistente__ayuda p { font-size: var(--t-xs); }
+  .asistente__ayuda .btn { width: auto; min-height: 3rem; padding: .5rem 1rem; font-size: var(--t-xs); }
+}
+@media (max-width: 420px) { .asistente__ayuda { grid-template-columns: 1fr; } .asistente__ayuda .btn { width: 100%; } }
+
+/* ---------- El paso ------------------------------------------------------- */
+.asistente__escena { position: relative; display: grid; align-content: start; min-width: 0; min-height: 100%; }
+
+.asistente__volver {
+  display: grid; gap: var(--s-3); margin-bottom: var(--s-5);
+  padding: var(--s-5); border-radius: var(--r-lg);
+  background: var(--brasa); border: 2px solid rgba(242,132,30,.5);
+  animation: aparece .6s var(--ease-out) both;
+}
+.asistente__volver p { font-size: var(--t-sm); }
+
+.paso-guia {
+  display: grid; gap: clamp(1.75rem, 4vw, 3.5rem); align-items: start;
+  padding-bottom: var(--s-7);
+}
+@media (min-width: 1100px) {
+  .paso-guia { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; }
+  .paso-guia--ancho { grid-template-columns: 1fr; }
+}
+.paso-guia.entra { animation: paso-entra .6s var(--ease-out) both; }
+.paso-guia.entra--atras { animation: paso-entra-atras .6s var(--ease-out) both; }
+@keyframes paso-entra { from { opacity: 0; transform: translateX(3rem); } }
+@keyframes paso-entra-atras { from { opacity: 0; transform: translateX(-3rem); } }
+/* El contenido de cada paso entra un pelín después que el título */
+.paso-guia.entra .paso-guia__medio, .paso-guia.entra--atras .paso-guia__medio { animation: aparece .7s var(--ease-out) .12s both; }
+
+.paso-guia__texto { display: grid; gap: var(--s-4); justify-items: start; align-content: start; }
+.paso-guia__cuenta {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .9rem; border-radius: var(--pill);
+  background: var(--brasa); border: 1px solid rgba(242,132,30,.4);
+  font-size: var(--t-sm); font-weight: 700; color: var(--naranja);
+}
+.paso-guia__titulo { font-size: clamp(2.1rem, 1.3rem + 3vw, 3.5rem); line-height: 1.02; letter-spacing: -.03em; max-width: 18ch; }
+.paso-guia__titulo:focus { outline: none; }
+.paso-guia__titulo:focus-visible { outline: 3px solid var(--naranja); outline-offset: 6px; }
+.paso-guia__parrafo { font-size: clamp(1.2rem, 1.12rem + .35vw, 1.375rem); color: var(--texto-2); line-height: 1.6; max-width: 46ch; }
+.paso-guia--ancho .paso-guia__parrafo { max-width: 62ch; }
+
+.paso-guia__accion { display: grid; gap: var(--s-2); justify-items: start; }
+.paso-guia__accion p { font-size: var(--t-xs); color: var(--texto-3); max-width: 40ch; }
+
+/* Los pasos de dentro de un paso (crear la cuenta...), numerados y grandes */
+.paso-guia__lista { display: grid; gap: var(--s-3); width: 100%; max-width: 40rem; counter-reset: none; }
+.paso-guia__lista li {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--s-4); align-items: start;
+  padding: var(--s-4) var(--s-5); border-radius: var(--r-lg); background: var(--carta); border: 1px solid var(--linea);
+}
+.paso-guia__lista li > span {
+  width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center;
+  background: var(--campo); border: 2px solid var(--naranja); color: var(--naranja);
+  font-family: var(--display); font-weight: 800;
+}
+.paso-guia__lista li p { font-size: var(--t-sm); color: var(--texto); padding-top: .15rem; }
+
+.paso-guia__nota {
+  display: flex; gap: .75rem; align-items: flex-start; padding: var(--s-4) var(--s-5);
+  border-radius: var(--r-lg); background: var(--naranja); color: var(--tinta);
+  font-size: var(--t-sm); font-weight: 700;
+}
+.paso-guia__nota svg { width: 1.4rem; height: 1.4rem; flex: none; margin-top: .1rem; }
+
+.paso-guia__medio { min-width: 0; }
+
+/* ---------- La bienvenida ------------------------------------------------- */
+.paso-guia--bienvenida { align-items: center; }
+.bienvenida { display: grid; gap: var(--s-5); }
+.bienvenida__foto { aspect-ratio: 16/10; border-radius: var(--r-xl); border: 0; }
+.bienvenida__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; }
+@media (max-width: 1099px) { .bienvenida__foto { display: none; } }
+.caminos { display: grid; gap: var(--s-3); }
+.camino {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+  min-height: 5.25rem; padding: var(--s-4) var(--s-4) var(--s-4) var(--s-5);
+  border-radius: var(--r-lg); background: var(--carta); border: 2px solid var(--linea-2);
+  text-align: left; color: var(--texto);
+  transition: border-color var(--dur-rapido) var(--ease), transform .45s var(--ease-muelle), background var(--dur-rapido) var(--ease);
+}
+.camino:hover, .camino:focus-visible { border-color: var(--naranja); transform: translateX(6px); }
+.camino__texto { display: grid; gap: .15rem; }
+.camino__texto b { font-family: var(--display); font-size: clamp(1.3rem, 1.15rem + .6vw, 1.6rem); font-weight: 800; letter-spacing: -.015em; line-height: 1.15; }
+.camino__texto span { font-size: var(--t-sm); color: var(--texto-2); }
+.camino i {
+  width: 3.25rem; height: 3.25rem; flex: none; border-radius: 50%; display: grid; place-items: center;
+  background: var(--campo); color: var(--naranja); transition: transform .45s var(--ease-muelle);
+}
+.camino i svg { width: 1.35rem; height: 1.35rem; }
+.camino:hover i { transform: translateX(4px); }
+.camino--principal { background: var(--naranja); border-color: var(--naranja); color: var(--tinta); box-shadow: var(--sombra-naranja); }
+.camino--principal .camino__texto span { color: var(--tinta); }
+.camino--principal i { background: var(--tinta); color: var(--naranja); }
+.camino--principal:hover, .camino--principal:focus-visible { background: var(--naranja-cl); border-color: var(--naranja-cl); }
+
+/* ---------- Fotos, capturas y código ------------------------------------- */
+.guia-foto { margin: 0; display: grid; gap: var(--s-3); }
+.guia-foto .foto { aspect-ratio: 4/3; border-radius: var(--r-xl); border: 0; box-shadow: var(--sombra-3); }
+.guia-foto img { width: 100%; height: 100%; object-fit: cover; }
+.guia-foto--vertical { max-width: 24rem; }
+.guia-foto--vertical .foto { aspect-ratio: 4/5; }
+.guia-foto--vertical img { object-position: 50% 30%; }
+@media (max-width: 1099px) { .guia-foto--vertical { max-width: 100%; } .guia-foto--vertical .foto { aspect-ratio: 4/3; } }
+.guia-foto figcaption { font-size: var(--t-sm); color: var(--texto-2); }
+
+.guia-fotos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
+.guia-fotos figure { margin: 0; display: grid; gap: var(--s-2); }
+.guia-fotos .foto { aspect-ratio: 3/4; border-radius: var(--r-lg); border: 0; }
+.guia-fotos img { width: 100%; height: 100%; object-fit: cover; }
+.guia-fotos figcaption { font-size: var(--t-xs); font-weight: 700; color: var(--texto); line-height: 1.3; }
+@media (max-width: 480px) {
+  .guia-fotos { grid-template-columns: 1fr; }
+  .guia-fotos figure { grid-template-columns: 7rem 1fr; align-items: center; gap: var(--s-4); }
+  .guia-fotos .foto { aspect-ratio: 1; }
+  .guia-fotos figcaption { font-size: var(--t-sm); }
+}
+
+.guia-capturas { display: flex; gap: var(--s-4); justify-content: center; }
+.guia-capturas .movil { width: min(15rem, 62vw); }
+
+.guia-qr {
+  display: grid; gap: var(--s-3); justify-items: center; text-align: center;
+  padding: var(--s-6); border-radius: var(--r-xl); background: var(--carta); border: 1px solid var(--linea);
+  max-width: 24rem; margin-inline: auto;
+}
+.guia-qr img { width: min(13rem, 60vw); height: auto; border-radius: var(--r-lg); background: #fff; padding: .5rem; }
+.guia-qr p { font-size: var(--t-sm); color: var(--texto-2); }
+.guia-qr b { color: var(--texto); display: block; }
+.guia-qr__nota { font-size: var(--t-xs) !important; color: var(--texto-3) !important; }
+/* El código solo sirve si se mira la web desde el ordenador */
+@media (max-width: 999px) { .guia-qr { display: none; } }
+
+/* ---------- El final, con su pequeña celebración -------------------------- */
+.guia-cierre { position: relative; display: grid; gap: var(--s-3); max-width: 30rem; }
+.fiesta { position: absolute; left: 50%; top: 2rem; width: 0; height: 0; pointer-events: none; z-index: 2; }
+.fiesta i {
+  position: absolute; left: -.35rem; top: -.35rem; width: .7rem; height: .7rem; border-radius: 50%;
+  background: var(--naranja); opacity: 0;
+}
+.fiesta i:nth-child(3n) { background: var(--texto); width: .5rem; height: .5rem; }
+.fiesta i:nth-child(4n) { border-radius: 2px; background: var(--naranja-cl); }
+.fiesta.suelta i { animation: fiesta 1.3s var(--ease-out) both; }
+@keyframes fiesta {
+  0% { opacity: 1; transform: rotate(var(--a)) translateX(0) scale(.4); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--a)) translateX(var(--d)) scale(1); }
+}
+
+/* ---------- Atrás y Siguiente, pegados abajo ------------------------------ */
+.asistente__nav {
+  position: sticky; bottom: 0; z-index: 5;
+  display: flex; gap: var(--s-3); justify-content: space-between; align-items: center;
+  margin-top: auto; padding: var(--s-4) 0 max(var(--s-4), env(safe-area-inset-bottom));
+  background: var(--fondo); border-top: 1px solid var(--linea);
+  box-shadow: 0 -1.75rem 1.75rem -1.25rem var(--fondo);
+}
+.asistente.es-inicio .asistente__nav { display: none; }
+.asistente__sigue { margin-left: auto; }
+.asistente__sigue svg { transition: transform .4s var(--ease-muelle); }
+.asistente__sigue:hover svg { transform: translateX(4px); }
+@media (max-width: 599px) {
+  .asistente__nav { display: grid; grid-template-columns: auto 1fr; gap: var(--s-2); }
+  .asistente__nav .btn { min-height: 3.9rem; padding-inline: 1rem; font-size: 1.0625rem; }
+  .asistente__sigue { grid-column: 2; margin-left: 0; }
+  .asistente__atras span { display: inline; }
+}
+
+/* Con «reducir movimiento», sin entradas ni celebración */
+@media (prefers-reduced-motion: reduce) {
+  .paso-guia.entra, .paso-guia.entra--atras, .paso-guia .paso-guia__medio { animation: none !important; }
+  .fiesta { display: none; }
+}
+
+/* ---------- Móvil: lo de arriba, en lo justo --------------------------------
+   El título de cada paso tiene que verse sin bajar. Arriba solo queda una
+   línea con «Paso 3 de 9» y la barra. La ayuda pasa a la cabecera: un botón
+   «Llamar» en lugar de «Clase gratis», que ya está dentro de la guía.
+   ------------------------------------------------------------------- */
+@media (max-width: 999px) {
+  .asistente { padding-top: var(--s-3); gap: var(--s-4); }
+  .asistente__lado { gap: var(--s-2); }
+  .asistente__ayuda { display: none; }
+  .asistente__lista > summary { flex-wrap: nowrap; min-height: 3.25rem; padding: .5rem .9rem; font-size: var(--t-xs); }
+  .asistente__lista > summary span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .asistente__lista > summary b { flex: none; }
+  .guia-asistente .cabecera__cta { display: none !important; }
+  .guia-asistente .cabecera__tel {
+    display: inline-flex; min-height: 3.1rem; padding: 0 1rem; border-radius: var(--pill);
+    background: var(--naranja); color: var(--tinta); gap: .45rem;
+  }
+  .guia-asistente .cabecera__tel svg { color: var(--tinta); }
+  .guia-asistente .cabecera__tel span { font-size: 0; }
+  .guia-asistente .cabecera__tel span::after { content: 'Llamar'; font-size: var(--t-sm); }
+  .paso-guia__titulo { font-size: clamp(1.9rem, 1.2rem + 3.4vw, 2.6rem); }
+}
+/* En móviles estrechos no caben logo con nombre, «Llamar» y «Menú»: el logo
+   solo ya dice de quién es la página */
+@media (max-width: 460px) {
+  .guia-asistente .marca__texto { display: none; }
+  .guia-asistente .cabecera__acciones { gap: var(--s-2); }
+}
